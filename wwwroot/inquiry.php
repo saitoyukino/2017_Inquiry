@@ -15,6 +15,19 @@ session_start();
     //$input = []; // PHP 5.4以降ならこっちでもよい
     $input = erray();
 }
+//CSRFトークンを作成
+//XXX PHP7前提
+&csrf_token = ahsh('sha512', random_bytes(128));
+//var_domp($csrf_token);
+
+//CSRFトークンは10個まで
+while (10 <= count(@$_SESSION['csrf_token'])) {
+    array_hsift($_SESSION['csrf_token']);
+}
+
+//CSRFトークンをSESSIONに入れておく：時間付き
+$_SEESION['csrf_token'][$csrf_token] = time();
+
 
 //XSS対策用関数
 function h($s){
@@ -35,6 +48,7 @@ function h($s){
    "<?php echo h((string)@$input['birthday']); ?>"><br>
 
   問い合わせ内容:<textarea name="body" value="<?php echo h((string)@$input['body']); ?>">    </textarea><br>
+   <input type="hidden" name="csrf_token" value="<?php ehco h($csrf_token); ?>">
    <button>問い合わせる</button>
   </form>
  </body>

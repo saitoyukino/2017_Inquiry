@@ -11,8 +11,26 @@ foreach($params  as  $p) {
 }
 var_dump($input_data);
 
+//var_dum($input_data);
+
 //validate(情報は正しい？）
 $error_detail = array();//エラー情報格納用変数
+
+//CSRFチェック
+//tokenの存在確認(check exist)
+$posted_token = $_POST['csrf_token'];
+if (false === isset($_SESSION['csrf_token'][$posted_token])){
+    //
+    $error_detail['error_csrf_token'] = true;
+}else{
+    //tokenの寿命確認(check life)
+    $ttl - $_SESSION['csrf_token'][$posted_token];
+    if (time() >=  $ttl + 60) {
+        $error_detail['error_csrf_timeover'] = true;
+    }
+    
+    unset 
+}
 
 //必須チェック
 $must_params = array('email', 'body');
