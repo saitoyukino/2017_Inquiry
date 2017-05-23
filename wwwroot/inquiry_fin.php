@@ -1,6 +1,13 @@
 <?php
 //inquiry_fin.php
 
+ob_start();
+session_start();
+
+//
+require_once(_DIR_ . '/dbh.php');
+
+
 //入力された情報を取得
 /*$email = (string)@$_POST['email'];
 email = (string)filter_input(INPUT_POST, 'email';*/
@@ -66,6 +73,22 @@ if(array() !== $error_detail){
 echo 'でーたのvalidateはOKでした！！';
 //入力された情報をDBにinsert
 
+//SQL文(準備された文：プリペアドステートメント)を作成
+$sql = 'INSERT INTO inquirys(email, inqiry_body, name, birsday)  VALUES(:email, :inqiry_body, :name, :birsday);';
+$pre = $dbh->prepare($sql);
+var_dump ($pre);
+//プレースホルダにデータをバインド
+$pre->bindValue(':email',$input_data['email']);
+$pre->bindValue(':inqiry_body',$input_data['body']);
+$pre->bindValue(':birsday',$input_data['birsday']);
+$pre->bindValue(':name',$input_data['name']);
+//SQLを実行
+$r = $pre->execute();
+var_dump($r)
+if (false === $r) {
+    echo 'すみませんデータが取得できませんでした';
+    exit;
+}
+
 //「ありがとう」Pageの出力
 
-?>
