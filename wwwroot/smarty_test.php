@@ -1,18 +1,24 @@
-<php
-//smarty_test.php
+<?php
+// smarty_test.php
 
-//Smarty‚Ìinclude
-require_onse(_DIR_ . '' '/vendor/smarty-3.1.30/libs/Smarty.class.php');
+// Smartyã®include
+require_once( __DIR__ . '/vendor/smarty-3.1.30/libs/Smarty.class.php');
 
-//Smarty‰Šúİ’è
-$smarty_obj = new Smarty();
-$smarty_obj->setTemplateDir(_DIR_.'/../smarty/templates/');
-$smarty_obj->setCompileDir(_DIR_.'/../smarty/templates_c/');
+// Smartyã®åˆæœŸè¨­å®š
+$smarty_obj  =  new Smarty();
+//var_dump($smarty_obj);
+$smarty_obj->setTemplateDir( __DIR__ . '/../smarty/templates/' );
+$smarty_obj->setCompileDir( __DIR__ . '/../smarty/templates_c/' );
+// ã‚¨ã‚¹ã‚±ãƒ¼ãƒ—ã‚’è‡ªå‹•ã§onã«ã™ã‚‹
+$smarty_obj->escape_html = true;
 
-//Smarty‚Ö‚Ìƒf[ƒ^‚Ì“ü—Í
-$s = 'ƒf[ƒ^“ü—ÍƒeƒXƒg';
-$smarty_obj->assign('val', $s);
+// Smartyã¸ã®ãƒ‡ãƒ¼ã‚¿ã®å…¥åŠ›
+$s = '<s>test</s>';
+$smarty_obj->assign('val',  $s);
+//
+$awk['a'] = 'é…åˆ—ã®a';
+$awk['b'] = 'é…åˆ—ã®b';
+$smarty_obj->assign('ar',  $awk);
 
-//ƒeƒ“ƒvƒŒ[ƒg‚ğw’è‚µ‚Äo—Í
+// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã‚’æŒ‡å®šã—ã¦å‡ºåŠ›
 $smarty_obj->display('smarty_test.tpl');
-
